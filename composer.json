@@ -1,0 +1,14 @@
+{
+    "name": "astra/astra-notices",
+    "description": "Easily create admin notices.",
+    "type": "library",
+    "license": "GPL v3",
+    "authors": [
+        {
+            "name": "Brainstorm Force",
+            "email": "hello@bsf.io"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
