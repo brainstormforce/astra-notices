@@ -5,7 +5,7 @@ Easily Create Admin Notices.
 1. Require the file `class-astra-notices.php` in your project.
 2. On action `admin_notices` register notices by calling method `Astra_Notices::add_notice()`
 
-**Example usege** 
+**Simplified usage** 
 ```
 add_action(
 	'admin_notices',
@@ -29,3 +29,4 @@ add_action(
 );
 ```
 
+Also check the example of [how this is used](https://github.com/brainstormforce/astra/blob/b9038d6ea02ae04b27db23b789b66b60907b4c16/inc/core/class-astra-admin-settings.php#L148-L187) in the Astra Theme. 
