@@ -1,6 +1,7 @@
 {
     "name": "astra/astra-notices",
     "description": "Easily create admin notices.",
+    "version": "1.1.0",
     "type": "library",
     "license": "GPL v3",
     "authors": [
