@@ -3,7 +3,7 @@ Easily Create Admin Notices.
 
 ### How to use this library
 1. Require the file `class-astra-notices.php` in your project.
-2. On action `admin_notices` register notices by calling method `Astra_Notices::add_notice()`
+2. Register your notices on action `admin_notices` by calling method `Astra_Notices::add_notice()`
 
 **Simplified usage** 
 ```
