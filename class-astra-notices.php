@@ -31,7 +31,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.4.0
 		 */
-		private static $version = '1.1.1';
+		private static $version = '1.1.2';
 
 		/**
 		 * Notices
@@ -291,7 +291,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			if ( false === $transient_status ) {
 
-				if ( false !== $notice['display-notice-after'] ) {
+				if ( isset( $notice['display-notice-after'] ) && false !== $notice['display-notice-after'] ) {
 
 					if ( 'delayed-notice' !== get_user_meta( get_current_user_id(), $notice['id'], true ) &&
 						'notice-dismissed' !== get_user_meta( get_current_user_id(), $notice['id'], true ) ) {
