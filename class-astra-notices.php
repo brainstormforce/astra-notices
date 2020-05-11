@@ -143,7 +143,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public function enqueue_scripts() {
 
-			if ( ! current_user_can( 'manage_options' ) ) {
+			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 
