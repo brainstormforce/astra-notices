@@ -147,9 +147,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-
 			wp_register_script( 'astra-notices', self::_get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
-
 			wp_localize_script(
 				'astra-notices',
 				'astraNotices',
