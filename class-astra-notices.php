@@ -112,14 +112,15 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function dismiss_notice() {
-
-			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( 'manage_options' ) ) ) {
-				return;
-			}
-
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
 			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
+			$notice              = $this->get_notice_by_id( $notice_id );
+			$capability          = ( is_array( $notice ) && isset( $notice['capability'] ) ) ? $notice['capability'] : 'manage_options';
+
+			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( $capability ) ) ) {
+				return;
+			}
 
 			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
 				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.' ) );
@@ -177,13 +178,37 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
+		 * Get all registered notices.
+		 * Since v1.1.8 it is recommended to register the notices on 
+		 *
+		 * @return array|null 
+		 */
+		private function get_notices() {
+			usort( self::$notices, array( $this, 'sort_notices' ) );
+
+			return self::$notices;
+		}
+
+		/**
+		 * Get notice by notice_id
+		 *
+		 * @param string $notice_id Notice id.
+		 *
+		 * @return void
+		 */
+		private function get_notice_by_id( $notice_id ) {
+			$notices = $this->get_notices();
+
+			return isset( $notices[ $notice_id ] ) ? $notices[ $notice_id ] : $notices;
+		}
+
+		/**
 		 * Notice Types
 		 *
 		 * @since 1.4.0
 		 * @return void
 		 */
 		public function show_notices() {
-
 			$defaults = array(
 				'id'                         => '',      // Optional, Notice ID. If empty it set `astra-notices-id-<$array-index>`.
 				'type'                       => 'info',  // Optional, Notice type. Default `info`. Expected [info, warning, notice, error].
@@ -195,20 +220,22 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				'priority'                   => 10,      // Priority of the notice.
 				'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from Astra_Notices.
 				'is_dismissible'             => true,
+				'capability'                 => 'manage_options', // User capability - This capability is required for the current user to see this notice. 
 			);
 
 			// Count for the notices that are rendered.
 			$notices_displayed = 0;
+			$notices = $this->get_notices();
 
-			// sort the array with priority.
-			usort( self::$notices, array( $this, 'sort_notices' ) );
-
-			foreach ( self::$notices as $key => $notice ) {
-
+			foreach ( $notices as $key => $notice ) {
 				$notice = wp_parse_args( $notice, $defaults );
 
-				$notice['id'] = self::get_notice_id( $notice, $key );
+				// Show notices only for users with `manage_options` cap.
+				if ( ! current_user_can( $notice[ 'capability' ] ) ) {
+					continue;
+				}
 
+				$notice['id'] = self::get_notice_id( $notice, $key );
 				$notice['classes'] = self::get_wrap_classes( $notice );
 
 				// Notices visible after transient expire.
