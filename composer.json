@@ -1,8 +1,8 @@
 {
     "name": "brainstormforce/astra-notices",
+    "type": "library",
     "description": "Easily create admin notices",
     "version": "1.1.8",
-    "type": "library",
     "license": "GPL v3",
     "authors": [
         {
@@ -10,8 +10,8 @@
             "email": "hello@bsf.io"
         }
     ],
-    "minimum-stability": "stable",
     "require-dev": {
         "composer/installers": "^1.11"
-    }
+    },
+    "minimum-stability": "stable"
 }
