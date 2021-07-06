@@ -16,6 +16,9 @@ jobs:
       - name: Maybe create a tag
         run: bash bin/release.sh
 
+      - name: Install Dependencies
+        run: composer install
+
       - name: Build the release
         run: vendor/bin/wp dist-archive . astra-notices.zip
       
