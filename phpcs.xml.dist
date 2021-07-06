@@ -6,7 +6,7 @@
 	 	<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
 		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
 	</rule>
-	<config name="testVersion" value="5.3-"/>
+	<config name="testVersion" value="5.2-"/>
 
 	<rule ref="WordPress-Core" />
 	<rule ref="WordPress-Docs" />
