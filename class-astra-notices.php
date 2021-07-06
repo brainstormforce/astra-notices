@@ -192,8 +192,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		private function get_notice_by_id( $notice_id ) {
 			$notices = $this->get_notices();
+			$notice = wp_list_filter( $notices, array(
+				'id' => $notice_id
+			) );
 
-			return isset( $notices[ $notice_id ] ) ? $notices[ $notice_id ] : $notices;
+			return ! empty( $notice ) ? $notice[ 0 ] : [];
 		}
 
 		/**
