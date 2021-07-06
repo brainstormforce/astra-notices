@@ -147,7 +147,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'astra-notices', self::_get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
 				'astra-notices',
 				'astraNotices',
@@ -335,13 +335,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Get URI
+		 * Get base URL for the astra-notices.
 		 *
 		 * @return mixed URL.
 		 */
-		public static function _get_uri() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-			$path       = wp_normalize_path( dirname( __FILE__ ) );
-			$theme_dir  = wp_normalize_path( get_template_directory() );
+		public static function get_url() {
+			$path      = wp_normalize_path( dirname( __FILE__ ) );
+			$theme_dir = wp_normalize_path( get_template_directory() );
 
 			if ( strpos( $path, $theme_dir ) !== false ) {
 				return trailingslashit( get_template_directory_uri() . str_replace( $theme_dir, '', $path ) );
