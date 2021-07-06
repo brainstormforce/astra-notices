@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Maybe create a tag
-        run: ./bin/release.sh
+        run: bash bin/release.sh
