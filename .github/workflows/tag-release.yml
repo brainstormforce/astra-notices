@@ -25,6 +25,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: $BRAINSTORM_FORCE_RELEASE
+          tag_name: env.BRAINSTORM_FORCE_RELEASE
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
