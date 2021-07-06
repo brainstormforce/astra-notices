@@ -1,7 +1,7 @@
 <?php
 /**
  * Astra Notices
- * 
+ *
  * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
  * @package Astra Notices
@@ -173,9 +173,9 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 		/**
 		 * Get all registered notices.
-		 * Since v1.1.8 it is recommended to register the notices on 
+		 * Since v1.1.8 it is recommended to register the notices on
 		 *
-		 * @return array|null 
+		 * @return array|null
 		 */
 		private function get_notices() {
 			usort( self::$notices, array( $this, 'sort_notices' ) );
@@ -188,15 +188,18 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @param string $notice_id Notice id.
 		 *
-		 * @return void
+		 * @return array notice based on the notice id.
 		 */
 		private function get_notice_by_id( $notice_id ) {
 			$notices = $this->get_notices();
-			$notice = wp_list_filter( $notices, array(
-				'id' => $notice_id
-			) );
+			$notice  = wp_list_filter(
+				$notices,
+				array(
+					'id' => $notice_id,
+				)
+			);
 
-			return ! empty( $notice ) ? $notice[ 0 ] : [];
+			return ! empty( $notice ) ? $notice[0] : array();
 		}
 
 		/**
@@ -217,22 +220,22 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				'priority'                   => 10,      // Priority of the notice.
 				'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from Astra_Notices.
 				'is_dismissible'             => true,
-				'capability'                 => 'manage_options', // User capability - This capability is required for the current user to see this notice. 
+				'capability'                 => 'manage_options', // User capability - This capability is required for the current user to see this notice.
 			);
 
 			// Count for the notices that are rendered.
 			$notices_displayed = 0;
-			$notices = $this->get_notices();
+			$notices           = $this->get_notices();
 
 			foreach ( $notices as $key => $notice ) {
 				$notice = wp_parse_args( $notice, $defaults );
 
 				// Show notices only for users with `manage_options` cap.
-				if ( ! current_user_can( $notice[ 'capability' ] ) ) {
+				if ( ! current_user_can( $notice['capability'] ) ) {
 					continue;
 				}
 
-				$notice['id'] = self::get_notice_id( $notice, $key );
+				$notice['id']      = self::get_notice_id( $notice, $key );
 				$notice['classes'] = self::get_wrap_classes( $notice );
 
 				// Notices visible after transient expire.
