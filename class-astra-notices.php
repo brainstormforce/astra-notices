@@ -1,18 +1,11 @@
 <?php
 /**
- * Astra Sites Notices
+ * Astra Notices
+ * 
+ * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
- * Closing notice on click on `astra-notice-close` class.
- *
- * If notice has the data attribute `data-repeat-notice-after="%2$s"` then notice close for that SPECIFIC TIME.
- * If notice has NO data attribute `data-repeat-notice-after="%2$s"` then notice close for the CURRENT USER FOREVER.
- *
- * > Create custom close notice link in the notice markup. E.g.
- * `<a href="#" data-repeat-notice-after="<?php echo MONTH_IN_SECONDS; ?>" class="astra-notice-close">`
- * It close the notice for 30 days.
- *
- * @package Astra Sites
- * @since 1.4.0
+ * @package Astra Notices
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,7 +17,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 	/**
 	 * Astra_Notices
 	 *
-	 * @since 1.4.0
+	 * @since 1.0.0
 	 */
 	class Astra_Notices {
 
@@ -33,7 +26,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var array Notices.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		private static $version = '1.1.8';
 
@@ -42,7 +35,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var array Notices.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		private static $notices = array();
 
@@ -51,14 +44,14 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -71,7 +64,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		public function __construct() {
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
@@ -83,10 +76,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Filters and Returns a list of allowed tags and attributes for a given context.
 		 *
-		 * @param Array  $allowedposttags Array of allowed tags.
-		 * @param String $context Context type (explicit).
-		 * @since 1.4.0
-		 * @return Array
+		 * @param array  $allowedposttags array of allowed tags.
+		 * @param string $context Context type (explicit).
+		 * @since 1.0.0
+		 * @return array
 		 */
 		public function add_data_attributes( $allowedposttags, $context ) {
 			$allowedposttags['a']['data-repeat-notice-after'] = true;
@@ -97,7 +90,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Add Notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @param array $args Notice arguments.
 		 * @return void
 		 */
@@ -108,7 +101,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Dismiss Notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function dismiss_notice() {
@@ -144,7 +137,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Enqueue Scripts.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function enqueue_scripts() {
@@ -159,22 +152,23 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Rating priority sort
+		 * Sort the notices based on the given priority of the notice.
+		 * This function is called from usort()
 		 *
 		 * @since 1.5.2
-		 * @param array $array1 array one.
-		 * @param array $array2 array two.
+		 * @param array $notice_1 First notice.
+		 * @param array $notice_2 Second Notice.
 		 * @return array
 		 */
-		public function sort_notices( $array1, $array2 ) {
-			if ( ! isset( $array1['priority'] ) ) {
-				$array1['priority'] = 10;
+		public function sort_notices( $notice_1, $notice_2 ) {
+			if ( ! isset( $notice_1['priority'] ) ) {
+				$notice_1['priority'] = 10;
 			}
-			if ( ! isset( $array2['priority'] ) ) {
-				$array2['priority'] = 10;
+			if ( ! isset( $notice_2['priority'] ) ) {
+				$notice_2['priority'] = 10;
 			}
 
-			return $array1['priority'] - $array2['priority'];
+			return $notice_1['priority'] - $notice_2['priority'];
 		}
 
 		/**
@@ -203,9 +197,9 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Notice Types
+		 * Display the notices in the WordPress admin.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function show_notices() {
@@ -257,14 +251,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Markup Notice.
+		 * Render a notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @param  array $notice Notice markup.
 		 * @return void
 		 */
 		public static function markup( $notice = array() ) {
-
 			wp_enqueue_script( 'astra-notices' );
 
 			do_action( 'astra_notice_before_markup' );
@@ -283,13 +276,12 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			do_action( "astra_notice_after_markup_{$notice['id']}" );
 
 			do_action( 'astra_notice_after_markup' );
-
 		}
 
 		/**
-		 * Notice classes.
+		 * Get wrapper classes for a notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return array       Notice wrapper classes.
@@ -310,13 +302,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Get Notice ID.
+		 * Get HTML ID for a given notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
-		 * @param  int   $key     Notice array index.
-		 * @return string       Notice id.
+		 * @param  int   $key    Notice array index.
+		 * @return string HTML if for the notice.
 		 */
 		private static function get_notice_id( $notice, $key ) {
 			if ( isset( $notice['id'] ) && ! empty( $notice['id'] ) ) {
@@ -327,9 +319,9 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Is notice expired?
+		 * Check if the notice is expires.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return boolean
