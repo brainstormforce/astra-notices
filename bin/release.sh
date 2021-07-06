@@ -18,7 +18,11 @@ if [[ -d "$BUILD_DIR" ]]; then
 fi
 
 COMMIT=$(git rev-parse HEAD)
-VERSION=$(grep 'private static $version = ' class-astra-notices.php | grep -oEi "'([0-9\.a-z\+-]+)';$" | sed "s/'//g; s/;//")
+VERSION=$(grep 'private static $version = ' ../../class-astra-notices.php | grep -oEi "'([0-9\.a-z\+-]+)';$" | sed "s/'//g; s/;//")
+
+echo $VERSION;
+
+exit 1;
 
 if [[ $VERSION != "null" ]]; then
     DEPLOY_BRANCH="release/${VERSION}"
