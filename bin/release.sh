@@ -11,8 +11,6 @@ BRANCH="${GITHUB_REF:-master}"
 SRC_DIR="$PWD"
 BUILD_DIR="/tmp/brainstormforce-build"
 
-echo $SRC_DIR;
-
 if [[ -d "$BUILD_DIR" ]]; then
 	echo "WARNING: ${BUILD_DIR} already exists. You may have accidentally cached this"
 	echo "directory. This will cause issues with deploying."
