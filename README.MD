@@ -25,7 +25,7 @@ array(
 **Example Usage** 
 ```PHP
 add_action(
-	'admin_notices',
+	'admin_init',
 	function() {
 		Astra_Notices::add_notice(
 			array(
