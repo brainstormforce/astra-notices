@@ -11,7 +11,8 @@
         }
     ],
     "require-dev": {
-        "composer/installers": "^1.11"
+        "composer/installers": "^1.11",
+        "wp-cli/dist-archive-command": "^2.0"
     },
     "minimum-stability": "stable"
 }

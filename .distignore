@@ -20,7 +20,7 @@ multisite.xml
 multisite.xml.dist
 phpcs.xml
 phpcs.xml.dist
-README.md
+README.MD
 wp-cli.local.yml
 tests
 vendor

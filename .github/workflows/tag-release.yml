@@ -1,0 +1,17 @@
+name: Create a tag
+
+on:
+  push:
+    branches:
+      - master
+      - release-workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Maybe create a tag
+        run: sh bin/release.sh
