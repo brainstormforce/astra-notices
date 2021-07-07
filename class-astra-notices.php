@@ -191,6 +191,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return array notice based on the notice id.
 		 */
 		private function get_notice_by_id( $notice_id ) {
+			if ( empty( $notice_id ) ) {
+				return array();
+			}
+
 			$notices = $this->get_notices();
 			$notice  = wp_list_filter(
 				$notices,
