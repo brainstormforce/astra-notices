@@ -41,7 +41,7 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 	 * Test to verify the notice is visible to user's with given user level/capability.
 	 */
 	public function test_user_can_see_notice() {
-		$astra_notices = new Astra_Notices();
+		$astra_notices = Astra_Notices::get_instance();
 
 		Astra_Notices::add_notice(
 			array(
@@ -71,7 +71,7 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 	 * Test that if capability is not passed, the notice is visible only to the user's with `manage_options` cap.
 	 */
 	public function test_user_can_see_notice_without_capability() {
-		$astra_notices = new Astra_Notices();
+		$astra_notices = Astra_Notices::get_instance();
 
 		Astra_Notices::add_notice(
 			array(
