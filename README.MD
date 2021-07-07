@@ -3,9 +3,9 @@ Easily Create Admin Notices.
 
 ### How to use this library
 1. Download the latest release from the tag as shown in the screenshot.
-![Download Package](https://cl.ly/f50cb1a45894/Image%2525202019-02-26%252520at%25252011.51.12%252520AM.png)
+![Download Package](https://user-images.githubusercontent.com/2931091/124632235-c91aa680-dea1-11eb-9213-dbb9c4615d60.jpg)
 2. Require the file `class-astra-notices.php` in your project.
-3. Register your notices on action `admin_notices` by calling method `Astra_Notices::add_notice()`
+3. Register your notices on action `admin_init` by calling method `Astra_Notices::add_notice()`
 
 **Default Parameters**
 ```PHP
@@ -25,7 +25,7 @@ array(
 **Example Usage** 
 ```PHP
 add_action(
-	'admin_notices',
+	'admin_init',
 	function() {
 		Astra_Notices::add_notice(
 			array(
