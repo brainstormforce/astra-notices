@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths:
+        # Release happens only if the version number in Astra_Notices is updated.
+        - 'class-astra-notices.php'
 
 jobs:
   build:
