@@ -109,7 +109,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
 			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
 			$notice              = $this->get_notice_by_id( $notice_id );
-			$capability          = ( is_array( $notice ) && isset( $notice['capability'] ) ) ? $notice['capability'] : 'manage_options';
+			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
 
 			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( $capability ) ) ) {
 				return;
