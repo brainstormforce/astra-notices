@@ -15,11 +15,13 @@
         "wp-cli/dist-archive-command": "^2.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "wp-coding-standards/wpcs": "^2.3",
-        "phpcompatibility/phpcompatibility-wp": "^2.1"
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5"
     },
     "scripts": {
         "format": "vendor/bin/phpcbf",
-        "lint": "vendor/bin/phpcs"
+        "lint": "vendor/bin/phpcs",
+        "test": "vendor/bin/phpunit"
     },
     "minimum-stability": "stable"
 }
