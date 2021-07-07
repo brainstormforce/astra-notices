@@ -5,7 +5,7 @@ on: pull_request
 
 jobs:
   phpunit:
-    name: PHPUnit (PHP ${{ matrix.php }} with WordPress ${{ matrix.wordpress }})
+    name: PHPUnit (PHP ${{ matrix.php }} with WordPress ${{ matrix.wordpress }}) + PHPCS
     runs-on: ubuntu-latest
 
     services:
@@ -65,17 +65,8 @@ jobs:
       - name: Run tests
         run: composer run test
 
-  phpcs:
-    name: PHPCS
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install dependencies
-      run: composer install --dev --prefer-dist --no-progress --no-suggest
-
-    - name: PHPCS check
-      uses: chekalsky/phpcs-action@v1
-      with:
-        phpcs_bin_path: './vendor/bin/phpcs'
+      - name: PHPCS check
+        if: always()
+        uses: chekalsky/phpcs-action@v1
+        with:
+          phpcs_bin_path: './vendor/bin/phpcs'
