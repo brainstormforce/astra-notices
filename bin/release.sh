@@ -81,7 +81,7 @@ git push origin "$DEPLOY_BRANCH"
 
 # Make a release if one doesn't exist.
 if [[ $DEPLOY_AS_RELEASE = "yes" && $(git tag -l "$VERSION") != $VERSION ]]; then
-    git tag "v$VERSION"
-    git push origin "v$VERSION"
-    echo "BRAINSTORM_FORCE_RELEASE=v$VERSION" >> $GITHUB_ENV
+    git tag "$VERSION"
+    git push origin "$VERSION"
+    echo "BRAINSTORM_FORCE_RELEASE=$VERSION" >> $GITHUB_ENV
 fi
