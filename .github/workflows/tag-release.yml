@@ -33,6 +33,8 @@ jobs:
         with:
           tag_name: ${{ env.BRAINSTORM_FORCE_RELEASE }}
           body: ''
+          name: v${{ env.BRAINSTORM_FORCE_RELEASE }}
+          draft: true
           files: astra-notices.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
