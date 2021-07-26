@@ -23,23 +23,31 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 				'role' => 'editor',
 			)
 		);
+
+		
+		
+		
+
+		
 	}
 
 	/**
 	 * Test that the notice is correctly dismissed by the user..
 	 */
 	public function test_user_can_dismiss_notice() {
-		Astra_Notices::add_notice(
-			array(
-				'id'         => 'astra-sites-5-start-notice',
-				'type'       => 'info',
-				'class'      => 'astra-sites-5-star',
-				'capability' => 'edit_posts',
-				'show_if'    => true,
-				'message'    => 'Sample Notice',
-			)
-		);
 
+		// add_action( 'admin_init', function() {
+			Astra_Notices::add_notice(
+				array(
+					'id'         => 'astra-sites-5-start-notice',
+					'type'       => 'info',
+					'class'      => 'astra-sites-5-star',
+					'capability' => 'edit_posts',
+					'show_if'    => true,
+					'message'    => 'Sample Notice',
+				)
+			);
+		// });
 		wp_set_current_user( $this->editor_user_id );
 
 		$_POST = array(
@@ -52,6 +60,8 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 		} catch ( WPAjaxDieContinueException $e ) {
 			unset( $e );
 		}
+
+		print_r($this->_last_response);
 
 		$response = json_decode( $this->_last_response, true );
 

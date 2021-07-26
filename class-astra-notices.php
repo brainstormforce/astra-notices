@@ -1,6 +1,6 @@
 <?php
 /**
- * Astra Notices
+ * Plugin name: Astra Notices
  *
  * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
@@ -29,6 +29,15 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @since 1.0.0
 		 */
 		private static $version = '1.1.8';
+
+		/**
+		 * Notices
+		 *
+		 * @access private
+		 * @var array Notices.
+		 * @since 1.0.0
+		 */
+		private $load_scripts = false;
 
 		/**
 		 * Notices
@@ -67,8 +76,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __construct() {
-			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_init', array( $this, 'show_notices' ), 30 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 30 );
 			add_action( 'wp_ajax_astra-notice-dismiss', array( $this, 'dismiss_notice' ) );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'add_data_attributes' ), 10, 2 );
 		}
@@ -141,7 +150,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
+
+			// Avoid to load the scripts.
+			if( ! $this->load_scripts ) {
+				return;
+			}
+
+			wp_enqueue_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
 				'astra-notices',
 				'astraNotices',
@@ -213,6 +228,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function show_notices() {
+
+			// if( wp_doing_ajax() ) {
+			// 	return;
+			// }
+
 			$defaults = array(
 				'id'                         => '',      // Optional, Notice ID. If empty it set `astra-notices-id-<$array-index>`.
 				'type'                       => 'info',  // Optional, Notice type. Default `info`. Expected [info, warning, notice, error].
@@ -252,6 +272,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 					if ( self::is_expired( $notice ) ) {
 
+						// Enqueue admin scripts.
+						$this->load_scripts = true;
+
+						// Display the markup.
 						self::markup( $notice );
 						++$notices_displayed;
 					}
@@ -268,7 +292,6 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public static function markup( $notice = array() ) {
-			wp_enqueue_script( 'astra-notices' );
 
 			do_action( 'astra_notice_before_markup' );
 
@@ -387,3 +410,17 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 	Astra_Notices::get_instance();
 
 endif;
+
+
+add_action( 'admin_init', function() {
+	Astra_Notices::add_notice(
+		array(
+			'id'         => 'astra-sites-5-start-notice1',
+			'type'       => 'info',
+			'class'      => 'astra-sites-5-star',
+			'capability' => 'edit_posts',
+			'show_if'    => true,
+			'message'    => 'Sample Notice',
+		)
+	);
+});

@@ -981,16 +981,16 @@
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "4b49fb70f067272b659ef0174ff9ca40fdaa6357"
+                "reference": "28af674ff175d0768a5a978e6de83f697d4a7f05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/4b49fb70f067272b659ef0174ff9ca40fdaa6357",
-                "reference": "4b49fb70f067272b659ef0174ff9ca40fdaa6357",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/28af674ff175d0768a5a978e6de83f697d4a7f05",
+                "reference": "28af674ff175d0768a5a978e6de83f697d4a7f05",
                 "shasum": ""
             },
             "require": {
@@ -1029,7 +1029,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-file-iterator/issues",
-                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/2.0.3"
+                "source": "https://github.com/sebastianbergmann/php-file-iterator/tree/2.0.4"
             },
             "funding": [
                 {
@@ -1037,7 +1037,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-30T08:25:21+00:00"
+            "time": "2021-07-19T06:46:01+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1966,6 +1966,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-11-30T07:30:19+00:00"
         },
         {
@@ -2434,16 +2435,16 @@
         },
         {
             "name": "wp-cli/php-cli-tools",
-            "version": "v0.11.12",
+            "version": "v0.11.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/php-cli-tools.git",
-                "reference": "e472e08489f7504d9e8c5c5a057e1419cd1b2b3e"
+                "reference": "a2866855ac1abc53005c102e901553ad5772dc04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/e472e08489f7504d9e8c5c5a057e1419cd1b2b3e",
-                "reference": "e472e08489f7504d9e8c5c5a057e1419cd1b2b3e",
+                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/a2866855ac1abc53005c102e901553ad5772dc04",
+                "reference": "a2866855ac1abc53005c102e901553ad5772dc04",
                 "shasum": ""
             },
             "require": {
@@ -2482,9 +2483,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wp-cli/php-cli-tools/issues",
-                "source": "https://github.com/wp-cli/php-cli-tools/tree/v0.11.12"
+                "source": "https://github.com/wp-cli/php-cli-tools/tree/v0.11.13"
             },
-            "time": "2021-03-03T12:43:49+00:00"
+            "time": "2021-07-01T15:08:16+00:00"
         },
         {
             "name": "wp-cli/wp-cli",
