@@ -15,7 +15,7 @@
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
+        "phpunit/phpunit": "^8.5.20",
         "wp-cli/dist-archive-command": "^2.0",
         "wp-coding-standards/wpcs": "^2.3"
     },
