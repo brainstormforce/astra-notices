@@ -11,7 +11,9 @@
 	<config name="testVersion" value="5.2-"/>
 
 	<rule ref="WordPress-Core" />
-	<rule ref="WordPress-Docs" />
+	<rule ref="WordPress-Docs">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
 	<rule ref="WordPress-Extra" />
 
 	<!-- Check all PHP files in directory tree by default. -->
@@ -21,5 +23,6 @@
 	<!-- Show sniff codes in all reports -->
 	<arg value="s"/>
 
+	<exclude-pattern>*/wordpress/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 </ruleset>
