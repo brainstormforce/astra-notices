@@ -21,5 +21,6 @@
 	<!-- Show sniff codes in all reports -->
 	<arg value="s"/>
 
+	<exclude-pattern>*/wordpress/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 </ruleset>
