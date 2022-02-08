@@ -21,7 +21,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 				'role' => 'editor',
 			)
 		);
-		
+
 		Astra_Notices::add_notice(
 			array(
 				'id'         => 'astra-sites-5-start-notice',
