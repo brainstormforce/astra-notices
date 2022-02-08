@@ -10,25 +10,18 @@
  */
 class TestDismissNotice extends WP_Ajax_UnitTestCase {
 
-	/**
-	 * Setup.
-	 *
-	 * @return void
-	 */
-	public function setUp() {
-		parent::setUp();
-
-		$this->editor_user_id = self::factory()->user->create(
-			array(
-				'role' => 'editor',
-			)
-		);
-	}
+	private $editor_user_id;
 
 	/**
 	 * Test that the notice is correctly dismissed by the user..
 	 */
 	public function test_user_can_dismiss_notice() {
+		$this->editor_user_id = self::factory()->user->create(
+			array(
+				'role' => 'editor',
+			)
+		);
+
 		Astra_Notices::add_notice(
 			array(
 				'id'         => 'astra-sites-5-start-notice',
