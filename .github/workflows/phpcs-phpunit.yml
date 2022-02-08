@@ -49,6 +49,11 @@ jobs:
 
       - name: Run tests
         run: composer run test
+        env:
+          WP_DB_NAME: ${{ env.DB_NAME }}
+          WP_DB_USER: ${{ env.DB_USER }}
+          WP_DB_PASS: ${{ env.DB_PASS }}
+          WP_DB_HOST: ${{ env.DB_HOST }}
 
       - name: PHPCS check
         if: always()
