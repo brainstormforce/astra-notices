@@ -15,8 +15,8 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->editor_user_id = self::factory()->user->create(
 			array(
