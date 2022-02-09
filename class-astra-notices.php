@@ -28,7 +28,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.0.0
 		 */
-		private static $version = '1.1.10';
+		private static $version = '1.1.11';
 
 		/**
 		 * Notices
@@ -277,8 +277,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			do_action( "astra_notice_before_markup_{$notice['id']}" );
 
 			?>
-			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
-				<div class="notice-container">
+			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo 'astra-notice-wrapper ' . esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
+				<div class="astra-notice-container">
 					<?php do_action( "astra_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php echo wp_kses_post( $notice['message'] ); ?>
 				</div>
