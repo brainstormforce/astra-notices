@@ -1,36 +1,36 @@
-.bsf-review-notice-container {
+.astra-review-notice-container {
 	display: flex;
 	align-items: center;
 	padding-top: 10px;
 }
 
-.bsf-review-notice-container .dashicons {
+.astra-review-notice-container .dashicons {
     font-size: 1.4em;
 	padding-left: 10px;
 }
 
-.bsf-review-notice-container a {
+.astra-review-notice-container a {
     padding-left: 5px;
     text-decoration: none;
 }
 
-.bsf-review-notice-container .dashicons:first-child {
+.astra-review-notice-container .dashicons:first-child {
     padding-left: 0;
 }
 
-.notice-image img {
+.astra-notice-container .notice-image img {
     max-width: 90px;
 }
 
-.notice-content .notice-heading {
+.astra-notice-container .notice-content .notice-heading {
     padding-bottom: 5px;
 }
 
-.notice-content {
+.astra-notice-container .notice-content {
     margin-left: 15px;
 }
 
-.notice-container {
+.astra-notice-container {
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
