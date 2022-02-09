@@ -277,7 +277,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			do_action( "astra_notice_before_markup_{$notice['id']}" );
 
 			?>
-			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo "astra-notice-wrapper " . esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
+			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo 'astra-notice-wrapper ' . esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
 				<div class="astra-notice-container">
 					<?php do_action( "astra_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php echo wp_kses_post( $notice['message'] ); ?>
