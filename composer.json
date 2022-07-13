@@ -18,7 +18,7 @@
         "phpunit/phpunit": "^7",
         "wp-cli/dist-archive-command": "^2.0",
         "wp-coding-standards/wpcs": "^2.3",
-        "wp-phpunit/wp-phpunit": "^5",
+        "wp-phpunit/wp-phpunit": "^6",
         "roots/wordpress": "^5.9",
         "yoast/phpunit-polyfills": "^1.0"
     },
