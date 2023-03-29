@@ -19,7 +19,7 @@
         "wp-cli/dist-archive-command": "^2.0",
         "wp-coding-standards/wpcs": "^2.3",
         "wp-phpunit/wp-phpunit": "^5",
-        "roots/wordpress": "^5.9",
+        "roots/wordpress": "^6.2",
         "yoast/phpunit-polyfills": "^1.0"
     },
     "config": {
