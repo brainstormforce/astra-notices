@@ -96,6 +96,12 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public static function add_notice( $args = array() ) {
 			self::$notices[] = $args;
+			$notice_id = $args['id']; // Notice ID.
+			$notices = get_option( 'allowed_astra_notices', array() );
+			if(array_search($notice_id, $notices) === false) { 
+				$notices[] = $notice_id; // Add notice id to the array.
+				update_option( 'allowed_astra_notices', $notices ); // Update the option.
+			}
 		}
 
 		/**
@@ -112,6 +118,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
 
 			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( $capability ) ) ) {
+				return;
+			}
+
+			$allowed_notices = get_option( 'allowed_astra_notices', array() ); // Get allowed notices.
+
+			// Verify that the notice being dismissed is in the list of allowed notices.
+			if(array_search($notice_id, $allowed_notices) === false) { 
 				return;
 			}
 
