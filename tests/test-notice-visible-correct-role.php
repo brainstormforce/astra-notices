@@ -10,6 +10,12 @@
  */
 class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 
+	private $editor_user_id;
+
+	private $subscriber_user_id;
+
+	private $administrator_user_id;
+
 	/**
 	 * Setup.
 	 *
@@ -57,15 +63,15 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 
 		// Notice should be visible to the `editor` user.
 		wp_set_current_user( $this->editor_user_id );
-		$this->assertContains( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringContainsString( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
 
 		// Notice should not be visible to the `subscriber` user.
 		wp_set_current_user( $this->subscriber_user_id );
-		$this->assertNotContains( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringNotContainsString( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
 
 		// Notice should be visible to the `administrator`.
 		wp_set_current_user( $this->administrator_user_id );
-		$this->assertContains( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringContainsString( 'Notice With Capability', get_echo( array( $astra_notices, 'show_notices' ) ) );
 	}
 
 	/**
@@ -87,14 +93,14 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 
 		// Notice should not be visible to the `editor` user.
 		wp_set_current_user( $this->editor_user_id );
-		$this->assertNotContains( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringNotContainsString( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
 
 		// Notice should not be visible to the `subscriber` user.
 		wp_set_current_user( $this->subscriber_user_id );
-		$this->assertNotContains( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringNotContainsString( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
 
 		// Notice should be visible to the `administrator`.
 		wp_set_current_user( $this->administrator_user_id );
-		$this->assertContains( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
+		$this->assertStringContainsString( 'Notice Without Explicite Capibility', get_echo( array( $astra_notices, 'show_notices' ) ) );
 	}
 }
