@@ -123,6 +123,15 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			$allowed_notices = get_option( 'allowed_astra_notices', array() ); // Get allowed notices.
 
+			 // Define restricted user meta keys
+			 $wp_default_meta_keys = array(
+				'wp_capabilities',
+				'wp_user_level',
+				'wp_user-settings',
+				'account_status',
+				'session_tokens',
+			);
+
 			// Verify that the notice being dismissed is in the list of allowed notices.
 			if(array_search($notice_id, $allowed_notices) === false) { 
 				return;
@@ -134,6 +143,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			// Valid inputs?
 			if ( ! empty( $notice_id ) ) {
+
+				if ( in_array( $notice_id, $wp_default_meta_keys, true ) ) {
+					wp_send_json_error( esc_html_e( 'Invalid notice ID.' ) );
+				}
 
 				if ( ! empty( $repeat_notice_after ) ) {
 					set_transient( $notice_id, true, $repeat_notice_after );
