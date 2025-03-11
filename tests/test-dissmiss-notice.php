@@ -48,7 +48,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 
 		$response = json_decode( $this->_last_response, true );
 
-		$this->assertContains( $response, array( 'success' => true ) );
+		$this->assertContainsEquals( $response, array( 'success' => true ) );
 
 		$user_meta_status = get_user_meta( $this->editor_user_id, 'astra-sites-5-start-notice', true );
 		$this->assertSame( $user_meta_status, 'notice-dismissed' );
