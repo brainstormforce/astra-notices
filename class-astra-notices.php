@@ -101,9 +101,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				return;
 			}
 
-			$args['id'] = sanitize_key( $args['id'] );
-
-			$notice_id = $args['id']; // Notice ID.
+			$notice_id = sanitize_key( $args['id'] ); // Notice ID.
 			$notices = get_option( 'allowed_astra_notices', array() );
 			if( ! in_array( $notice_id, $notices, true ) )  { 
 				$notices[] = $notice_id; // Add notice id to the array.
