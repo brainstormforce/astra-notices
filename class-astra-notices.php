@@ -96,7 +96,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public static function add_notice( $args = array() ) {
 			self::$notices[] = $args;
-			if ( empty( $args['id'] ) ) { 
+			if ( ! is_array( $args ) || empty( $args['id'] ) ) {
 				return; 
    			}
 			$notice_id = $args['id']; // Notice ID.
