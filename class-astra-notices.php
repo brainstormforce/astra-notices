@@ -28,7 +28,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.0.0
 		 */
-		private static $version = '1.1.12';
+		private static $version = '1.1.13';
 
 		/**
 		 * Notices
@@ -96,6 +96,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public static function add_notice( $args = array() ) {
 			self::$notices[] = $args;
+
+			if( ! isset( $args['id'] ) ) {
+				return;
+			}
+
 			$notice_id = $args['id']; // Notice ID.
 			$notices = get_option( 'allowed_astra_notices', array() );
 			if(array_search($notice_id, $notices) === false) { 
@@ -132,8 +137,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				'session_tokens',
 			);
 
-			// Verify that the notice being dismissed is in the list of allowed notices.
-			if(array_search($notice_id, $allowed_notices) === false) { 
+			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
+			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && array_search( $notice_id, $allowed_notices ) === false ) {
 				return;
 			}
 
@@ -230,7 +235,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				)
 			);
 
-			return ! empty( $notice ) ? $notice[0] : array();
+			return ( ! empty( $notice ) && isset( $notice[0] ) ) ? $notice[0] : array();
 		}
 
 		/**

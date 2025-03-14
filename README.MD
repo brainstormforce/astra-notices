@@ -10,7 +10,7 @@ Easily Create Admin Notices.
 **Default Parameters**
 ```PHP
 array(
-    'id'                         => '',      // Optional, Notice ID. If empty it set `astra-notices-id-<$array-index>`.
+    'id'                         => '',      // Required, Notice ID. Id can be like: `astra-notices-id-<$pluginslug>`.
     'type'                       => 'info',  // Optional, Notice type. Default `info`. Expected [info, warning, notice, error].
     'message'                    => '',      // Optional, Message.
     'show_if'                    => true,    // Optional, Show notice on custom condition. E.g. 'show_if' => if( is_admin() ) ? true, false, .
