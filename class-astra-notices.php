@@ -95,10 +95,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public static function add_notice( $args = array() ) {
-			self::$notices[] = $args;
 			if ( ! is_array( $args ) || empty( $args['id'] ) ) {
-				return; 
+			    return; 
    			}
+			self::$notices[] = $args;
 			$notice_id = $args['id']; // Notice ID.
 			$notices = get_option( 'allowed_astra_notices', array() );
 			if(array_search($notice_id, $notices) === false) { 
