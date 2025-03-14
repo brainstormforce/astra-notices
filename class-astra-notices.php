@@ -138,7 +138,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			);
 
 			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
-			if ( strpos( $notice_id, 'astra-notices-id-' ) === false && array_search( $notice_id, $allowed_notices ) === false ) {
+			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && array_search( $notice_id, $allowed_notices ) === false ) {
 				return;
 			}
 
@@ -235,7 +235,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				)
 			);
 
-			return ! empty( $notice ) ? $notice[0] : array();
+			return ( ! empty( $notice ) && isset( $notice[0] ) ) ? $notice[0] : array();
 		}
 
 		/**
