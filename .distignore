@@ -29,4 +29,4 @@ node_modules
 *.zip
 package-lock.json
 .github
-/wordpress/
+wordpress/

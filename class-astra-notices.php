@@ -101,9 +101,9 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				return;
 			}
 
-			$notice_id = $args['id']; // Notice ID.
+			$notice_id = sanitize_key( $args['id'] ); // Notice ID.
 			$notices = get_option( 'allowed_astra_notices', array() );
-			if(array_search($notice_id, $notices) === false) { 
+			if( ! in_array( $notice_id, $notices, true ) )  { 
 				$notices[] = $notice_id; // Add notice id to the array.
 				update_option( 'allowed_astra_notices', $notices ); // Update the option.
 			}
@@ -138,7 +138,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			);
 
 			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
-			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && array_search( $notice_id, $allowed_notices ) === false ) {
+			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && ( ! in_array($notice_id, $allowed_notices, true) ) ) {
 				return;
 			}
 
