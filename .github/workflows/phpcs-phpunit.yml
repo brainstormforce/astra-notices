@@ -69,5 +69,5 @@ jobs:
       - name: Run PHPCS
         if: always()  # Runs even if tests fail
         run: |
-          vendor/bin/phpcs --standard=WordPress --report=checkstyle -d memory_limit=512M . | cs2pr
+          vendor/bin/phpcs -d memory_limit=512M
         continue-on-error: false  # Fail the job on PHPCS errors
