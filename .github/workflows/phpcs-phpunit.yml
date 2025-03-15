@@ -55,5 +55,14 @@ jobs:
           WP_DB_PASS: ${{ env.DB_PASS }}
           WP_DB_HOST: ${{ env.DB_HOST }}
 
-      - name: Run phpcs
-        run: ./vendor/bin/phpcs
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-suggest --no-progress
+
+      - name: Check PHPCS version
+        run: vendor/bin/phpcs --version
+  
+      - name: PHPCS check
+        if: always()
+        uses: chekalsky/phpcs-action@v1
+        with:
+          phpcs_bin_path: './vendor/bin/phpcs -d memory_limit=512M'
