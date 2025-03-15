@@ -39,10 +39,18 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-          tools: composer, cs2pr
+          tools: composer:v2, cs2pr  # Specify Composer v2 explicitly
 
-      - name: Composer Install
-        uses: ramsey/composer-install@v1
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
@@ -55,14 +63,11 @@ jobs:
           WP_DB_PASS: ${{ env.DB_PASS }}
           WP_DB_HOST: ${{ env.DB_HOST }}
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-suggest --no-progress
-
       - name: Check PHPCS version
         run: vendor/bin/phpcs --version
   
-      - name: PHPCS check
-        if: always()
-        uses: chekalsky/phpcs-action@v1
-        with:
-          phpcs_bin_path: './vendor/bin/phpcs -d memory_limit=512M'
+      - name: Run PHPCS
+        if: always()  # Runs even if tests fail
+        run: |
+          vendor/bin/phpcs --standard=WordPress --report=checkstyle -d memory_limit=512M . | cs2pr
+        continue-on-error: false  # Fail the job on PHPCS errors
