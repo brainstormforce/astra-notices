@@ -289,7 +289,6 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 					}
 				}
 			}
-
 		}
 
 		/**
@@ -402,7 +401,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return mixed URL.
 		 */
 		public static function get_url() {
-			$path      = wp_normalize_path( dirname( __FILE__ ) );
+			$path      = wp_normalize_path( __DIR__ ); // phpcs:ignore PHPCompatibility.Keywords.NewKeywords.t_dirFound
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
 			if ( strpos( $path, $theme_dir ) !== false ) {
@@ -411,7 +410,6 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				return plugin_dir_url( __FILE__ );
 			}
 		}
-
 	}
 
 	/**
