@@ -81,7 +81,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @since 1.0.0
 		 * @return array
 		 */
-		public function add_data_attributes( $allowedposttags, $context ) {
+		public function add_data_attributes( $allowedposttags, $context ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 			$allowedposttags['a']['data-repeat-notice-after'] = true;
 
 			return $allowedposttags;
