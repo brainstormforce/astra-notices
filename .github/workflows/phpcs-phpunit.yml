@@ -65,6 +65,9 @@ jobs:
 
       - name: Check PHPCS version
         run: vendor/bin/phpcs --version
+
+      - name: Check PHPCS config path 
+        run: vendor/bin/phpcs --config-show
   
       - name: Run PHPCS
         if: always()  # Runs even if tests fail
