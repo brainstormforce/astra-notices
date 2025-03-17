@@ -401,7 +401,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return mixed URL.
 		 */
 		public static function get_url() {
-			$path      = wp_normalize_path( __DIR__ ); // phpcs:ignore PHPCompatibility.Keywords.NewKeywords.t_dirFound
+			$path      = wp_normalize_path( dirname( __FILE__ ) ); // phpcs:ignore Modernize.FunctionCalls.Dirname.FileConstant
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
 			if ( strpos( $path, $theme_dir ) !== false ) {
