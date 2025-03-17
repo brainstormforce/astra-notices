@@ -97,13 +97,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		public static function add_notice( $args = array() ) {
 			self::$notices[] = $args;
 
-			if( ! isset( $args['id'] ) ) {
+			if ( ! isset( $args['id'] ) ) {
 				return;
 			}
 
 			$notice_id = sanitize_key( $args['id'] ); // Notice ID.
-			$notices = get_option( 'allowed_astra_notices', array() );
-			if( ! in_array( $notice_id, $notices, true ) )  { 
+			$notices   = get_option( 'allowed_astra_notices', array() );
+			if ( ! in_array( $notice_id, $notices, true ) ) {
 				$notices[] = $notice_id; // Add notice id to the array.
 				update_option( 'allowed_astra_notices', $notices ); // Update the option.
 			}
@@ -128,8 +128,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			$allowed_notices = get_option( 'allowed_astra_notices', array() ); // Get allowed notices.
 
-			 // Define restricted user meta keys
-			 $wp_default_meta_keys = array(
+			// Define restricted user meta keys.
+			$wp_default_meta_keys = array(
 				'wp_capabilities',
 				'wp_user_level',
 				'wp_user-settings',
@@ -138,7 +138,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			);
 
 			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
-			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && ( ! in_array($notice_id, $allowed_notices, true) ) ) {
+			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && ( ! in_array( $notice_id, $allowed_notices, true ) ) ) {
 				return;
 			}
 
