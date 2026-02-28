@@ -119,6 +119,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
 			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
+
+			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
+				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.' ) );
+			}
+
 			$notice              = $this->get_notice_by_id( $notice_id );
 			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
 
@@ -140,10 +145,6 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
 			if ( strpos( $notice_id, 'astra-notices-id-' ) !== 0 && ( ! in_array( $notice_id, $allowed_notices, true ) ) ) {
 				return;
-			}
-
-			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
-				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.' ) );
 			}
 
 			// Valid inputs?
