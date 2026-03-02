@@ -147,7 +147,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			if ( ! empty( $notice_id ) ) {
 
 				if ( in_array( $notice_id, $wp_default_meta_keys, true ) ) {
-					wp_send_json_error( esc_html_e( 'Invalid notice ID.' ) );
+					wp_send_json_error( esc_html__( 'Invalid notice ID.', 'astra-notices' ) );
 				}
 
 				if ( ! empty( $repeat_notice_after ) ) {
