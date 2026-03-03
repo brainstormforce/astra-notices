@@ -118,8 +118,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		public function dismiss_notice() {
 			check_ajax_referer( 'astra-notices', 'nonce' );
 
-			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
-			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
+			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( wp_unslash( $_POST['notice_id'] ) ) : '';
+			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( wp_unslash( $_POST['repeat_notice_after'] ) ) : '';
 			$notice              = $this->get_notice_by_id( $notice_id );
 			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
 
