@@ -56,7 +56,7 @@ add_action(
 					$image_path,
 					__( 'Hello! Seems like you have used Header Footer Elementor to build this website — Thanks a ton!', 'header-footer-elementor' ),
 					__( 'Could you please do us a BIG favor and give it a 5-star rating on WordPress? This would boost our motivation and help other users make a comfortable decision while choosing the Header Footer Elementor.', 'header-footer-elementor' ),
-					'https://wordpress.org/support/plugin/header-footer-elementor/reviews/?filter=5#new-post',
+					'https://wordpress.org/support/plugin/header-footer-elementor/reviews/#new-post',
 					__( 'Ok, you deserve it', 'header-footer-elementor' ),
 					MONTH_IN_SECONDS,
 					__( 'Nope, maybe later', 'header-footer-elementor' ),
