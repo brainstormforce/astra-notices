@@ -28,7 +28,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.0.0
 		 */
-		private static $version = '1.1.15';
+		private static $version = '1.1.16';
 
 		/**
 		 * Notices
@@ -118,7 +118,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		public function dismiss_notice() {
 			check_ajax_referer( 'astra-notices', 'nonce' );
 
-			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
+			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( wp_unslash( $_POST['notice_id'] ) ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
 			$notice              = $this->get_notice_by_id( $notice_id );
 			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
