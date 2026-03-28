@@ -151,7 +151,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				}
 
 				if ( ! empty( $repeat_notice_after ) ) {
-					set_transient( $notice_id, true, $repeat_notice_after );
+					set_transient( $notice_id . '_' . get_current_user_id(), true, $repeat_notice_after );
 				} else {
 					update_user_meta( get_current_user_id(), $notice_id, 'notice-dismissed' );
 				}
@@ -366,7 +366,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return boolean
 		 */
 		private static function is_expired( $notice ) {
-			$transient_status = get_transient( $notice['id'] );
+			$transient_key    = $notice['id'] . '_' . get_current_user_id();
+			$transient_status = get_transient( $transient_key );
 
 			if ( false === $transient_status ) {
 
@@ -374,7 +375,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 					if ( 'delayed-notice' !== get_user_meta( get_current_user_id(), $notice['id'], true ) &&
 						'notice-dismissed' !== get_user_meta( get_current_user_id(), $notice['id'], true ) ) {
-						set_transient( $notice['id'], 'delayed-notice', $notice['display-notice-after'] );
+						set_transient( $transient_key, 'delayed-notice', $notice['display-notice-after'] );
 						update_user_meta( get_current_user_id(), $notice['id'], 'delayed-notice' );
 
 						return false;
