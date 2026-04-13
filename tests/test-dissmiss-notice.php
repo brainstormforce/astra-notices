@@ -1,8 +1,8 @@
 <?php
 /**
- * DissMiss Notice Testcase
+ * Dismiss Notice Testcase
  *
- * @package Astra_Notices
+ * @package BSF_Admin_Notices
  */
 
 /**
@@ -13,7 +13,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 	private $editor_user_id;
 
 	/**
-	 * Test that the notice is correctly dismissed by the user..
+	 * Test that the notice is correctly dismissed by the user.
 	 */
 	public function test_user_can_dismiss_notice() {
 		$this->editor_user_id = self::factory()->user->create(
@@ -22,7 +22,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 			)
 		);
 
-		Astra_Notices::add_notice(
+		BSF_Admin_Notices::add_notice(
 			array(
 				'id'         => 'astra-sites-5-start-notice',
 				'type'       => 'info',
@@ -36,12 +36,12 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 		wp_set_current_user( $this->editor_user_id );
 
 		$_POST = array(
-			'nonce'     => wp_create_nonce( 'astra-notices' ),
+			'nonce'     => wp_create_nonce( 'bsf-admin-notices' ),
 			'notice_id' => 'astra-sites-5-start-notice',
 		);
 
 		try {
-			$this->_handleAjax( 'astra-notice-dismiss' );
+			$this->_handleAjax( 'bsf-admin-notice-dismiss' );
 		} catch ( WPAjaxDieContinueException $e ) {
 			unset( $e );
 		}

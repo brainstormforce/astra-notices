@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Astra_Notices
+ * @package BSF_Admin_Notices
  */
 
 // Composer autoloader must be loaded before WP_PHPUNIT__DIR will be available
@@ -21,7 +21,7 @@ require_once getenv( 'WP_PHPUNIT__DIR' ) . '/includes/functions.php';
 tests_add_filter(
 	'muplugins_loaded',
 	function () {
-		require dirname( __DIR__ ) . '/class-astra-notices.php';
+		require dirname( __DIR__ ) . '/class-bsf-admin-notices.php';
 	}
 );
 
