@@ -1,21 +1,21 @@
 /**
- * Customizer controls toggles
+ * BSF Admin Notices dismiss handler.
  *
- * @package Astra
+ * @package BSF Admin Notices
  */
 
 ( function( $ ) {
 
 	/**
-	 * Helper class for the main Customizer interface.
+	 * Dismiss helper for BSF Admin Notices.
 	 *
 	 * @since 1.0.0
-	 * @class ASTCustomizer
+	 * @class BsfAdminNotices
 	 */
-	AstraNotices = {
+	BsfAdminNotices = {
 
 		/**
-		 * Initializes our custom logic for the Customizer.
+		 * Initializes click handlers.
 		 *
 		 * @since 1.0.0
 		 * @method init
@@ -26,7 +26,7 @@
 		},
 
 		/**
-		 * Binds events for the Astra Portfolio.
+		 * Binds events for notice dismissal.
 		 *
 		 * @since 1.0.0
 		 * @access private
@@ -34,33 +34,33 @@
 		 */
 		_bind: function()
 		{
-			$( document ).on('click', '.astra-notice-close', AstraNotices._dismissNoticeNew );
-			$( document ).on('click', '.astra-notice .notice-dismiss', AstraNotices._dismissNotice );
+			$( document ).on('click', '.bsf-admin-notice-close', BsfAdminNotices._dismissNoticeNew );
+			$( document ).on('click', '.bsf-admin-notice .notice-dismiss', BsfAdminNotices._dismissNotice );
 		},
 
 		_dismissNotice: function( event ) {
 			event.preventDefault();
 
-			var repeat_notice_after = $( this ).parents('.astra-notice').data( 'repeat-notice-after' ) || '';
-			var notice_id = $( this ).parents('.astra-notice').attr( 'id' ) || '';
+			var repeat_notice_after = $( this ).parents('.bsf-admin-notice').data( 'repeat-notice-after' ) || '';
+			var notice_id = $( this ).parents('.bsf-admin-notice').attr( 'id' ) || '';
 
-			AstraNotices._ajax( notice_id, repeat_notice_after );
+			BsfAdminNotices._ajax( notice_id, repeat_notice_after );
 		},
 
 		_dismissNoticeNew: function( event ) {
 			event.preventDefault();
 
 			var repeat_notice_after = $( this ).attr( 'data-repeat-notice-after' ) || '';
-			var notice_id = $( this ).parents('.astra-notice').attr( 'id' ) || '';
+			var notice_id = $( this ).parents('.bsf-admin-notice').attr( 'id' ) || '';
 
-			var $el = $( this ).parents('.astra-notice');
+			var $el = $( this ).parents('.bsf-admin-notice');
 			$el.fadeTo( 100, 0, function() {
 				$el.slideUp( 100, function() {
 					$el.remove();
 				});
 			});
 
-			AstraNotices._ajax( notice_id, repeat_notice_after );
+			BsfAdminNotices._ajax( notice_id, repeat_notice_after );
 
 			var link   = $( this ).attr( 'href' ) || '';
 			var target = $( this ).attr( 'target' ) || '';
@@ -70,7 +70,7 @@
 		},
 
 		_ajax: function( notice_id, repeat_notice_after ) {
-			
+
 			if( '' === notice_id ) {
 				return;
 			}
@@ -79,9 +79,9 @@
 				url: ajaxurl,
 				type: 'POST',
 				data: {
-					action            : 'astra-notice-dismiss',
-					nonce             : astraNotices._notice_nonce,
-					notice_id         : notice_id,
+					action              : 'bsf-admin-notice-dismiss',
+					nonce               : bsfAdminNotices._notice_nonce,
+					notice_id           : notice_id,
 					repeat_notice_after : parseInt( repeat_notice_after ),
 				},
 			});
@@ -90,6 +90,6 @@
 	};
 
 	$( function() {
-		AstraNotices.init();
+		BsfAdminNotices.init();
 	} );
 } )( jQuery );
