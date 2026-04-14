@@ -5,7 +5,7 @@
  * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
  * @package BSF Admin Notices
- * @since   x.x.x
+ * @since   1.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
