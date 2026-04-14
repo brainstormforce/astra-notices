@@ -22,7 +22,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 	 * intentionally frozen at their original values so old plugin JS/CSS that
 	 * is already shipped continues to work without updates.
 	 *
-	 * @since x.x.x
+	 * @since 1.2.0
 	 */
 	class BSF_Admin_Notices {
 
@@ -31,7 +31,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var string
-		 * @since x.x.x
+		 * @since 1.2.0
 		 */
 		private static $version = '1.2.0';
 
@@ -40,7 +40,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var array
-		 * @since x.x.x
+		 * @since 1.2.0
 		 */
 		private static $notices = array();
 
@@ -49,14 +49,14 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since x.x.x
+		 * @since 1.2.0
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -69,7 +69,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 */
 		public function __construct() {
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
@@ -83,7 +83,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 *
 		 * @param array  $allowedposttags array of allowed tags.
 		 * @param string $context Context type (explicit).
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @return array
 		 */
 		public function add_data_attributes( $allowedposttags, $context ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
@@ -95,7 +95,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Add Notice.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @param array $args Notice arguments.
 		 * @return void
 		 */
@@ -117,7 +117,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Dismiss Notice.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @return void
 		 */
 		public function dismiss_notice() {
@@ -183,7 +183,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Enqueue Scripts.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @return void
 		 */
 		public function enqueue_scripts() {
@@ -202,7 +202,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * Sort the notices based on the given priority of the notice.
 		 * This function is called from usort()
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @param array $notice_1 First notice.
 		 * @param array $notice_2 Second Notice.
 		 * @return array
@@ -255,7 +255,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Display the notices in the WordPress admin.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @return void
 		 */
 		public function show_notices() {
@@ -308,7 +308,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Render a notice.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 * @param  array $notice Notice markup.
 		 * @return void
 		 */
@@ -344,7 +344,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Get wrapper classes for a notice.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return array       Notice wrapper classes.
@@ -367,7 +367,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Get HTML ID for a given notice.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @param  int   $key    Notice array index.
@@ -384,7 +384,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Check if the notice is expires.
 		 *
-		 * @since x.x.x
+		 * @since 1.2.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return boolean
