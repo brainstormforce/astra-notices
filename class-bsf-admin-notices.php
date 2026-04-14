@@ -5,14 +5,14 @@
  * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
  * @package BSF Admin Notices
- * @since   1.0.0
+ * @since   x.x.x
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) ) :
+if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 
 	/**
 	 * BSF_Admin_Notices
@@ -22,7 +22,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 	 * intentionally frozen at their original values so old plugin JS/CSS that
 	 * is already shipped continues to work without updates.
 	 *
-	 * @since 1.0.0
+	 * @since x.x.x
 	 */
 	class BSF_Admin_Notices {
 
@@ -31,7 +31,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		 *
 		 * @access private
 		 * @var string
-		 * @since 1.0.0
+		 * @since x.x.x
 		 */
 		private static $version = '1.1.16';
 
@@ -40,7 +40,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		 *
 		 * @access private
 		 * @var array
-		 * @since 1.0.0
+		 * @since x.x.x
 		 */
 		private static $notices = array();
 
@@ -49,14 +49,14 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since 1.0.0
+		 * @since x.x.x
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -69,7 +69,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Constructor.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 */
 		public function __construct() {
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
@@ -83,7 +83,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		 *
 		 * @param array  $allowedposttags array of allowed tags.
 		 * @param string $context Context type (explicit).
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @return array
 		 */
 		public function add_data_attributes( $allowedposttags, $context ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
@@ -95,7 +95,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Add Notice.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @param array $args Notice arguments.
 		 * @return void
 		 */
@@ -117,7 +117,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Dismiss Notice.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @return void
 		 */
 		public function dismiss_notice() {
@@ -183,7 +183,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Enqueue Scripts.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @return void
 		 */
 		public function enqueue_scripts() {
@@ -202,7 +202,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		 * Sort the notices based on the given priority of the notice.
 		 * This function is called from usort()
 		 *
-		 * @since 1.5.2
+		 * @since x.x.x
 		 * @param array $notice_1 First notice.
 		 * @param array $notice_2 Second Notice.
 		 * @return array
@@ -255,7 +255,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Display the notices in the WordPress admin.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @return void
 		 */
 		public function show_notices() {
@@ -308,7 +308,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Render a notice.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 * @param  array $notice Notice markup.
 		 * @return void
 		 */
@@ -344,7 +344,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Get wrapper classes for a notice.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return array       Notice wrapper classes.
@@ -367,7 +367,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Get HTML ID for a given notice.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @param  int   $key    Notice array index.
@@ -384,7 +384,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 		/**
 		 * Check if the notice is expires.
 		 *
-		 * @since 1.0.0
+		 * @since x.x.x
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return boolean
@@ -434,21 +434,13 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 	}
 
 	// Backward-compatibility alias so old callers using Astra_Notices:: keep working.
-	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
+	if ( ! class_exists( 'Astra_Notices' ) ) {
+		class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
+	}
 
 	/**
 	 * Kicking this off by calling 'get_instance()' method
 	 */
 	BSF_Admin_Notices::get_instance();
-
-elseif ( ! class_exists( 'BSF_Admin_Notices' ) && class_exists( 'Astra_Notices' ) ) :
-
-	// A legacy v1 copy loaded first — alias the new name to the old so v2 callers work.
-	class_alias( 'Astra_Notices', 'BSF_Admin_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
-
-elseif ( class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) ) :
-
-	// BSF_Admin_Notices exists (another v2 copy loaded) but Astra_Notices alias is missing.
-	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
 
 endif;

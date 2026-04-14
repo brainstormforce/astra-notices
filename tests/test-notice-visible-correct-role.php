@@ -108,6 +108,7 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 	 * Test backward-compatible access via Astra_Notices alias.
 	 */
 	public function test_alias_add_notice() {
+		$this->assertTrue( class_exists( 'Astra_Notices' ), 'Astra_Notices alias should exist via class_alias' );
 		$notices = new Astra_Notices();
 
 		Astra_Notices::add_notice(
