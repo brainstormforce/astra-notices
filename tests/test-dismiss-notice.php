@@ -1,8 +1,8 @@
 <?php
 /**
- * DissMiss Notice Testcase
+ * Dismiss Notice Testcase
  *
- * @package Astra_Notices
+ * @package BSF_Admin_Notices
  */
 
 /**
@@ -13,7 +13,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 	private $editor_user_id;
 
 	/**
-	 * Test that the notice is correctly dismissed by the user..
+	 * Test that the notice is correctly dismissed by the user.
 	 */
 	public function test_user_can_dismiss_notice() {
 		$this->editor_user_id = self::factory()->user->create(
@@ -22,7 +22,7 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 			)
 		);
 
-		Astra_Notices::add_notice(
+		BSF_Admin_Notices::add_notice(
 			array(
 				'id'         => 'astra-sites-5-start-notice',
 				'type'       => 'info',
@@ -48,9 +48,10 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 
 		$response = json_decode( $this->_last_response, true );
 
-		$this->assertContainsEquals( $response, array( 'success' => true ) );
+		$this->assertContainsEquals( array( 'success' => true ), $response );
 
 		$user_meta_status = get_user_meta( $this->editor_user_id, 'astra-sites-5-start-notice', true );
-		$this->assertSame( $user_meta_status, 'notice-dismissed' );
+		$this->assertSame( 'notice-dismissed', $user_meta_status );
 	}
+
 }
