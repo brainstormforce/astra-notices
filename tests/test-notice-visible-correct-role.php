@@ -104,23 +104,4 @@ class TestNoticeVisibleForCorrectRole extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'Notice Without Explicite Capibility', get_echo( array( $notices, 'show_notices' ) ) );
 	}
 
-	/**
-	 * Test backward-compatible access via Astra_Notices alias.
-	 */
-	public function test_alias_add_notice() {
-		$this->assertTrue( class_exists( 'Astra_Notices' ), 'Astra_Notices alias should exist via class_alias' );
-		$notices = new Astra_Notices();
-
-		Astra_Notices::add_notice(
-			array(
-				'id'      => 'alias-test-notice',
-				'type'    => 'info',
-				'show_if' => true,
-				'message' => 'Alias Test Notice',
-			)
-		);
-
-		wp_set_current_user( $this->administrator_user_id );
-		$this->assertStringContainsString( 'Alias Test Notice', get_echo( array( $notices, 'show_notices' ) ) );
-	}
 }

@@ -433,11 +433,6 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		}
 	}
 
-	// Backward-compatibility alias so old callers using Astra_Notices:: keep working.
-	if ( ! class_exists( 'Astra_Notices' ) ) {
-		class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
-	}
-
 	/**
 	 * Kicking this off by calling 'get_instance()' method
 	 */

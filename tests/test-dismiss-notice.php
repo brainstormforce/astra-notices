@@ -54,12 +54,4 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 		$this->assertSame( 'notice-dismissed', $user_meta_status );
 	}
 
-	/**
-	 * Test that Astra_Notices alias works for backward compatibility.
-	 */
-	public function test_class_alias_backward_compat() {
-		$this->assertTrue( class_exists( 'Astra_Notices' ) );
-		$this->assertTrue( class_exists( 'BSF_Admin_Notices' ) );
-		$this->assertInstanceOf( 'BSF_Admin_Notices', Astra_Notices::get_instance() );
-	}
 }
