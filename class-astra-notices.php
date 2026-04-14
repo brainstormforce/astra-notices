@@ -14,4 +14,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-require_once __DIR__ . '/class-bsf-admin-notices.php';
+require_once dirname( __FILE__ ) . '/class-bsf-admin-notices.php'; // phpcs:ignore Modernize.FunctionCalls.Dirname.FileConstant

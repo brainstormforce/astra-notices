@@ -434,7 +434,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 	}
 
 	// Backward-compatibility alias so old callers using Astra_Notices:: keep working.
-	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' );
+	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
 
 	/**
 	 * Kicking this off by calling 'get_instance()' method
@@ -444,11 +444,11 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) 
 elseif ( ! class_exists( 'BSF_Admin_Notices' ) && class_exists( 'Astra_Notices' ) ) :
 
 	// A legacy v1 copy loaded first — alias the new name to the old so v2 callers work.
-	class_alias( 'Astra_Notices', 'BSF_Admin_Notices' );
+	class_alias( 'Astra_Notices', 'BSF_Admin_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
 
 elseif ( class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) ) :
 
 	// BSF_Admin_Notices exists (another v2 copy loaded) but Astra_Notices alias is missing.
-	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' );
+	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
 
 endif;
