@@ -1,1 +1,0 @@
-- [astra-notices audit](astra-notices-audit.md) — v1.1.16 audit: filterable cap check, incomplete meta blocklist, global transients, overpermissive GH workflow
