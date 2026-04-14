@@ -1,13 +1,13 @@
 # BSF Admin Notices
+Easily Create Admin Notices.
 
-An easy-to-use PHP library to add dismissible admin notices in the WordPress admin. _Previously named `Astra_Notices`._
-
-Both `BSF_Admin_Notices` and `Astra_Notices` class names work — a `class_alias` ensures full backward compatibility. Existing consumer code using `Astra_Notices::add_notice()` continues to work without any changes.
+> The PHP class has been renamed from `Astra_Notices` to `BSF_Admin_Notices`. Both names work — a `class_alias` ensures full backward compatibility.
 
 ### How to use this library
-1. Download the latest release from the tag.
-2. Require the file `class-bsf-admin-notices.php` (or `class-astra-notices.php` — both work) in your project.
-3. Register your notices on action `admin_init` by calling method `BSF_Admin_Notices::add_notice()` (or `Astra_Notices::add_notice()`).
+1. Download the latest release from the tag as shown in the screenshot.
+![Download Package](https://user-images.githubusercontent.com/2931091/124632235-c91aa680-dea1-11eb-9213-dbb9c4615d60.jpg)
+2. Require the file `class-astra-notices.php` in your project.
+3. Register your notices on action `admin_init` by calling method `Astra_Notices::add_notice()`
 
 **Default Parameters**
 ```PHP
@@ -20,7 +20,7 @@ array(
     'display-notice-after'       => false,      // Optional, Dismiss-able notice time. It'll auto show after given time.
     'class'                      => '',      // Optional, Additional notice wrapper class.
     'priority'                   => 10,      // Priority of the notice.
-    'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from BSF_Admin_Notices.
+    'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from Astra_Notices.
 )
 ```
 
@@ -29,7 +29,7 @@ array(
 add_action(
 	'admin_init',
 	function() {
-		BSF_Admin_Notices::add_notice(
+		Astra_Notices::add_notice(
 			array(
 				'id'                         => 'your-notice-id',
 				'type'                       => '',
