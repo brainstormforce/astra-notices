@@ -12,10 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
+if ( ! class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) ) :
 
 	/**
 	 * BSF_Admin_Notices
+	 *
+	 * Renamed from Astra_Notices. All runtime strings (AJAX action, nonce,
+	 * script handles, JS globals, CSS classes, option keys, ID prefixes) are
+	 * intentionally frozen at their original values so old plugin JS/CSS that
+	 * is already shipped continues to work without updates.
 	 *
 	 * @since 1.0.0
 	 */
@@ -67,34 +72,10 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __construct() {
-			self::maybe_migrate_legacy_option();
-
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_ajax_bsf-admin-notice-dismiss', array( $this, 'dismiss_notice' ) );
+			add_action( 'wp_ajax_astra-notice-dismiss', array( $this, 'dismiss_notice' ) );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'add_data_attributes' ), 10, 2 );
-		}
-
-		/**
-		 * One-time migration of the legacy `allowed_astra_notices` option to `bsf_admin_notices_allowed`.
-		 *
-		 * Previously dismissed notices must keep behaving as dismissed after the class rename,
-		 * so we copy the legacy option value to the new key on first load. Runs exactly once
-		 * per site (guarded by `bsf_admin_notices_migrated`).
-		 *
-		 * @return void
-		 */
-		private static function maybe_migrate_legacy_option() {
-			if ( get_option( 'bsf_admin_notices_migrated', false ) ) {
-				return;
-			}
-
-			$legacy = get_option( 'allowed_astra_notices', false );
-			if ( false !== $legacy ) {
-				update_option( 'bsf_admin_notices_allowed', $legacy );
-			}
-
-			update_option( 'bsf_admin_notices_migrated', 1 );
 		}
 
 		/**
@@ -126,10 +107,10 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 			}
 
 			$notice_id = sanitize_key( $args['id'] ); // Notice ID.
-			$notices   = get_option( 'bsf_admin_notices_allowed', array() );
+			$notices   = get_option( 'allowed_astra_notices', array() );
 			if ( ! in_array( $notice_id, $notices, true ) ) {
 				$notices[] = $notice_id; // Add notice id to the array.
-				update_option( 'bsf_admin_notices_allowed', $notices ); // Update the option.
+				update_option( 'allowed_astra_notices', $notices ); // Update the option.
 			}
 		}
 
@@ -140,38 +121,51 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return void
 		 */
 		public function dismiss_notice() {
-			check_ajax_referer( 'bsf-admin-notices', 'nonce' );
+			check_ajax_referer( 'astra-notices', 'nonce' );
 
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( wp_unslash( $_POST['notice_id'] ) ) : '';
-			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
+			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : 0;
 			$notice              = $this->get_notice_by_id( $notice_id );
 			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
 
-			if ( ! apply_filters( 'bsf_admin_notices_user_cap_check', current_user_can( $capability ) ) ) {
-				return;
+			$has_cap = current_user_can( $capability );
+
+			/**
+			 * Filters whether the current user passes the capability check for notice dismissal.
+			 *
+			 * Both the legacy and new filter names are fired for backward compatibility.
+			 * Filters can only restrict access (return false), never grant it — if the
+			 * underlying current_user_can() check fails, filters cannot override to true.
+			 */
+			$cap_check = apply_filters( 'astra_notices_user_cap_check', $has_cap );
+			$cap_check = apply_filters( 'bsf_admin_notices_user_cap_check', $cap_check );
+
+			if ( ! $has_cap || ! $cap_check ) {
+				wp_send_json_error( esc_html__( 'Permission denied.', 'astra-notices' ) );
 			}
 
-			$allowed_notices = get_option( 'bsf_admin_notices_allowed', array() ); // Get allowed notices.
+			$allowed_notices = get_option( 'allowed_astra_notices', array() ); // Get allowed notices.
 
-			// Define restricted user meta keys.
+			// Define restricted user meta keys using the dynamic table prefix.
+			global $wpdb;
 			$wp_default_meta_keys = array(
-				'wp_capabilities',
-				'wp_user_level',
-				'wp_user-settings',
+				$wpdb->prefix . 'capabilities',
+				$wpdb->prefix . 'user_level',
+				$wpdb->prefix . 'user-settings',
 				'account_status',
 				'session_tokens',
 			);
 
-			// If $notice_id does not start with bsf-admin-notices-id- and notice_id is not from the allowed notices, then return.
-			if ( strpos( $notice_id, 'bsf-admin-notices-id-' ) !== 0 && ( ! in_array( $notice_id, $allowed_notices, true ) ) ) {
-				return;
+			// if $notice_id does not start with astra-notices-id and notice_id is not from the allowed notices, then return.
+			if ( 0 !== strpos( $notice_id, 'astra-notices-id-' ) && ( ! in_array( $notice_id, $allowed_notices, true ) ) ) {
+				wp_send_json_error( esc_html__( 'Invalid notice ID.', 'astra-notices' ) );
 			}
 
 			// Valid inputs?
 			if ( ! empty( $notice_id ) ) {
 
 				if ( in_array( $notice_id, $wp_default_meta_keys, true ) ) {
-					wp_send_json_error( esc_html__( 'Invalid notice ID.', 'bsf-admin-notices' ) );
+					wp_send_json_error( esc_html__( 'Invalid notice ID.', 'astra-notices' ) );
 				}
 
 				if ( ! empty( $repeat_notice_after ) ) {
@@ -193,13 +187,13 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_style( 'bsf-admin-notices', self::get_url() . 'notices.css', array(), self::$version );
-			wp_register_script( 'bsf-admin-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_style( 'astra-notices', self::get_url() . 'notices.css', array(), self::$version );
+			wp_register_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
-				'bsf-admin-notices',
-				'bsfAdminNotices',
+				'astra-notices',
+				'astraNotices',
 				array(
-					'_notice_nonce' => wp_create_nonce( 'bsf-admin-notices' ),
+					'_notice_nonce' => wp_create_nonce( 'astra-notices' ),
 				)
 			);
 		}
@@ -266,7 +260,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 */
 		public function show_notices() {
 			$defaults = array(
-				'id'                         => '',      // Optional, Notice ID. If empty it set `bsf-admin-notices-id-<$array-index>`.
+				'id'                         => '',      // Optional, Notice ID. If empty it set `astra-notices-id-<$array-index>`.
 				'type'                       => 'info',  // Optional, Notice type. Default `info`. Expected [info, warning, notice, error].
 				'message'                    => '',      // Optional, Message.
 				'show_if'                    => true,    // Optional, Show notice on custom condition. E.g. 'show_if' => if( is_admin() ) ? true, false, .
@@ -274,7 +268,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 				'display-notice-after'       => false,      // Optional, Dismiss-able notice time. It'll auto show after given time.
 				'class'                      => '',      // Optional, Additional notice wrapper class.
 				'priority'                   => 10,      // Priority of the notice.
-				'display-with-other-notices' => true,    // Should the notice be displayed if other notices are being displayed from BSF_Admin_Notices.
+				'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from BSF_Admin_Notices.
 				'is_dismissible'             => true,
 				'capability'                 => 'manage_options', // User capability - This capability is required for the current user to see this notice.
 			);
@@ -319,24 +313,31 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return void
 		 */
 		public static function markup( $notice = array() ) {
-			wp_enqueue_script( 'bsf-admin-notices' );
-			wp_enqueue_style( 'bsf-admin-notices' );
+			wp_enqueue_script( 'astra-notices' );
+			wp_enqueue_style( 'astra-notices' );
 
+			// Dual-emit: legacy (astra_notice_*) + new (bsf_admin_notice_*) hooks for backward compat.
+			// Note: consumers hooking BOTH names for the same event will be called twice.
+			do_action( 'astra_notice_before_markup' );
 			do_action( 'bsf_admin_notice_before_markup' );
 
+			do_action( "astra_notice_before_markup_{$notice['id']}" );
 			do_action( "bsf_admin_notice_before_markup_{$notice['id']}" );
 
 			?>
-			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo 'bsf-admin-notice-wrapper ' . esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
-				<div class="bsf-admin-notice-container">
+			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo esc_attr( 'astra-notice-wrapper ' . $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
+				<div class="astra-notice-container">
+					<?php do_action( "astra_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php do_action( "bsf_admin_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php echo wp_kses_post( $notice['message'] ); ?>
 				</div>
 			</div>
 			<?php
 
+			do_action( "astra_notice_after_markup_{$notice['id']}" );
 			do_action( "bsf_admin_notice_after_markup_{$notice['id']}" );
 
+			do_action( 'astra_notice_after_markup' );
 			do_action( 'bsf_admin_notice_after_markup' );
 		}
 
@@ -349,7 +350,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return array       Notice wrapper classes.
 		 */
 		private static function get_wrap_classes( $notice ) {
-			$classes = array( 'bsf-admin-notice', 'notice' );
+			$classes = array( 'astra-notice', 'notice' );
 
 			if ( $notice['is_dismissible'] ) {
 				$classes[] = 'is-dismissible';
@@ -377,7 +378,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 				return $notice['id'];
 			}
 
-			return 'bsf-admin-notices-id-' . $key;
+			return 'astra-notices-id-' . $key;
 		}
 
 		/**
@@ -424,7 +425,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 			$path      = wp_normalize_path( dirname( __FILE__ ) ); // phpcs:ignore Modernize.FunctionCalls.Dirname.FileConstant
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
-			if ( strpos( $path, $theme_dir ) !== false ) {
+			if ( false !== strpos( $path, $theme_dir ) ) {
 				return trailingslashit( get_template_directory_uri() . str_replace( $theme_dir, '', $path ) );
 			} else {
 				return plugin_dir_url( __FILE__ );
@@ -432,9 +433,22 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		}
 	}
 
+	// Backward-compatibility alias so old callers using Astra_Notices:: keep working.
+	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' );
+
 	/**
 	 * Kicking this off by calling 'get_instance()' method
 	 */
 	BSF_Admin_Notices::get_instance();
+
+elseif ( ! class_exists( 'BSF_Admin_Notices' ) && class_exists( 'Astra_Notices' ) ) :
+
+	// A legacy v1 copy loaded first — alias the new name to the old so v2 callers work.
+	class_alias( 'Astra_Notices', 'BSF_Admin_Notices' );
+
+elseif ( class_exists( 'BSF_Admin_Notices' ) && ! class_exists( 'Astra_Notices' ) ) :
+
+	// BSF_Admin_Notices exists (another v2 copy loaded) but Astra_Notices alias is missing.
+	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' );
 
 endif;

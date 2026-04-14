@@ -36,21 +36,30 @@ class TestDismissNotice extends WP_Ajax_UnitTestCase {
 		wp_set_current_user( $this->editor_user_id );
 
 		$_POST = array(
-			'nonce'     => wp_create_nonce( 'bsf-admin-notices' ),
+			'nonce'     => wp_create_nonce( 'astra-notices' ),
 			'notice_id' => 'astra-sites-5-start-notice',
 		);
 
 		try {
-			$this->_handleAjax( 'bsf-admin-notice-dismiss' );
+			$this->_handleAjax( 'astra-notice-dismiss' );
 		} catch ( WPAjaxDieContinueException $e ) {
 			unset( $e );
 		}
 
 		$response = json_decode( $this->_last_response, true );
 
-		$this->assertContainsEquals( $response, array( 'success' => true ) );
+		$this->assertContainsEquals( array( 'success' => true ), $response );
 
 		$user_meta_status = get_user_meta( $this->editor_user_id, 'astra-sites-5-start-notice', true );
-		$this->assertSame( $user_meta_status, 'notice-dismissed' );
+		$this->assertSame( 'notice-dismissed', $user_meta_status );
+	}
+
+	/**
+	 * Test that Astra_Notices alias works for backward compatibility.
+	 */
+	public function test_class_alias_backward_compat() {
+		$this->assertTrue( class_exists( 'Astra_Notices' ) );
+		$this->assertTrue( class_exists( 'BSF_Admin_Notices' ) );
+		$this->assertInstanceOf( 'BSF_Admin_Notices', Astra_Notices::get_instance() );
 	}
 }
