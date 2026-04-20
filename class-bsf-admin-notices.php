@@ -33,7 +33,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @var string
 		 * @since 1.2.0
 		 */
-		private static $version = '1.2.0';
+		private static $version = '1.2.1';
 
 		/**
 		 * Registered notices.
@@ -439,3 +439,10 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 	BSF_Admin_Notices::get_instance();
 
 endif;
+
+// Backward compatibility alias for bsf-analytics library and third-party plugins
+// that still reference the old class name. Safe to remove once all consumers
+// are updated.
+if ( ! class_exists( 'Astra_Notices' ) ) {
+	class_alias( 'BSF_Admin_Notices', 'Astra_Notices' ); // phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.class_aliasFound
+}
