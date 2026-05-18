@@ -33,7 +33,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @var string
 		 * @since 1.2.0
 		 */
-		private static $version = '1.2.1';
+		private static $version = '1.2.2';
 
 		/**
 		 * Registered notices.
