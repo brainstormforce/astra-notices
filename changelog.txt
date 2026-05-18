@@ -1,0 +1,4 @@
+1.2.2 - 19th May 2026
+- Fix: Added wp_unslash() before absint() on repeat_notice_after POST value for WordPress.org compliance (WPCS ValidatedSanitizedInput).
+- Fix: Renamed allowed_astra_notices option to astra_notices_allowed for WordPress.org prefix compliance.
+- Fix: Added capability permission filter (bsf_admin_notices_user_cap_check) alongside existing astra_notices_user_cap_check for backward compatibility.
