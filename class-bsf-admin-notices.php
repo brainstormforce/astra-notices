@@ -82,7 +82,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		/**
 		 * Migrate allowed_astra_notices → astra_notices_allowed (one-time, on first load).
 		 *
-		 * @since x.x.x
+		 * @since 1.2.2
 		 * @return void
 		 */
 		private function maybe_migrate_notices_option() {
