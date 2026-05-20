@@ -33,7 +33,7 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @var string
 		 * @since 1.2.0
 		 */
-		private static $version = '1.2.2';
+		private static $version = '1.2.3';
 
 		/**
 		 * Registered notices.
@@ -202,11 +202,11 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_style( 'astra-notices', self::get_url() . 'notices.css', array(), self::$version );
-			wp_register_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_style( 'bsf-astra-notices', self::get_url() . 'notices.css', array(), self::$version );
+			wp_register_script( 'bsf-astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
-				'astra-notices',
-				'astraNotices',
+				'bsf-astra-notices',
+				'bsfAstraNotices',
 				array(
 					'_notice_nonce' => wp_create_nonce( 'astra-notices' ),
 				)
@@ -328,8 +328,8 @@ if ( ! class_exists( 'BSF_Admin_Notices' ) ) :
 		 * @return void
 		 */
 		public static function markup( $notice = array() ) {
-			wp_enqueue_script( 'astra-notices' );
-			wp_enqueue_style( 'astra-notices' );
+			wp_enqueue_script( 'bsf-astra-notices' );
+			wp_enqueue_style( 'bsf-astra-notices' );
 
 			// Dual-emit: legacy (astra_notice_*) + new (bsf_admin_notice_*) hooks for backward compat.
 			// Note: consumers hooking BOTH names for the same event will be called twice.
